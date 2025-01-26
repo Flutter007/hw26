@@ -13,10 +13,10 @@ class Hw26 extends StatefulWidget {
 
 class _Hw26State extends State<Hw26> {
   List<Task> tasks = [
-    Task(title: 'Купить Li 9)', isCompleted: false),
-    Task(title: 'Доделать дз', isCompleted: false),
+    Task(title: 'Продать Li 9', isCompleted: false),
+    Task(title: 'Доделать Flutter HomeWork', isCompleted: false),
     Task(title: 'Создать макет сайта', isCompleted: false),
-    Task(title: 'Проверить уровень масла в машине', isCompleted: false),
+    Task(title: 'Проверить давление в колесах', isCompleted: false),
   ];
 
   void addTask(Task addTask) {

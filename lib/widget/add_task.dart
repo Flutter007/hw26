@@ -55,13 +55,24 @@ class _AddTaskState extends State<AddTask> {
           Row(
             children: [
               Expanded(
-                  child: TextButton(
-                onPressed: onAdd,
-                child: Text('Add'),
-              )),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade200),
+                  onPressed: onAdd,
+                  child: Text('Add'),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
               Expanded(
-                  child: ElevatedButton(
-                      onPressed: onCanceled, child: Text('Cancel')))
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.shade200),
+                  onPressed: onCanceled,
+                  child: Text('Cancel'),
+                ),
+              )
             ],
           ),
         ],
