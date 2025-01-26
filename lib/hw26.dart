@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:hw26/data/task.dart';
 import 'package:hw26/screens/todo_screen.dart';
 import 'package:hw26/widget/add_task.dart';
@@ -25,6 +25,18 @@ class _Hw26State extends State<Hw26> {
     });
   }
 
+  void changeCondition(Task task) {
+    setState(() {
+      task.isCompleted = !task.isCompleted;
+    });
+  }
+
+  void deleteTask(Task task) {
+    setState(() {
+      tasks.remove(task);
+    });
+  }
+
   void openAddSheet() {
     showModalBottomSheet(
       context: context,
@@ -38,17 +50,22 @@ class _Hw26State extends State<Hw26> {
       appBar: AppBar(
         title: Text(
           'ToDo List!',
-          style: GoogleFonts.bebasNeue(fontSize: 30),
         ),
         actions: [
           IconButton(
             onPressed: openAddSheet,
-            icon: Icon(Icons.add),
+            icon: Icon(
+              Icons.add,
+              color: Colors.blue.shade700,
+              size: 33,
+            ),
           )
         ],
       ),
       body: TodoScreen(
         tasks: tasks,
+        checkTask: changeCondition,
+        deleteTask: deleteTask,
       ),
     );
   }

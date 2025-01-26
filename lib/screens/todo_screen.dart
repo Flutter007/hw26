@@ -4,12 +4,24 @@ import 'package:hw26/widget/task_card.dart';
 
 class TodoScreen extends StatelessWidget {
   final List<Task> tasks;
-  const TodoScreen({super.key, required this.tasks});
+  final void Function(Task) checkTask;
+  final void Function(Task) deleteTask;
+  const TodoScreen(
+      {super.key,
+      required this.tasks,
+      required this.checkTask,
+      required this.deleteTask});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: tasks.map((task) => TaskCard(tasks: task)).toList(),
+      children: tasks
+          .map((task) => TaskCard(
+                task: task,
+                checkTask: () => checkTask(task),
+                deleteTask: () => deleteTask(task),
+              ))
+          .toList(),
     );
   }
 }

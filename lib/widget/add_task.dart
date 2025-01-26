@@ -22,7 +22,7 @@ class _AddTaskState extends State<AddTask> {
       widget.onTaskCreated(newTask);
       onCanceled();
     } else {
-      final emptyTask = Task(title: 'Пустой лист', isCompleted: false);
+      final emptyTask = Task(title: 'Пустая задача', isCompleted: false);
       widget.onTaskCreated(emptyTask);
     }
   }
@@ -43,7 +43,7 @@ class _AddTaskState extends State<AddTask> {
                     title = value;
                   }),
                   decoration: InputDecoration(
-                    label: Text('title of task :'),
+                    label: Text('Title of task :'),
                   ),
                 ),
               ),
