@@ -57,7 +57,8 @@ class _AddTaskState extends State<AddTask> {
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green.shade200),
+                    backgroundColor: Colors.green.shade200,
+                  ),
                   onPressed: onAdd,
                   child: Text('Add'),
                 ),
@@ -68,7 +69,8 @@ class _AddTaskState extends State<AddTask> {
               Expanded(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red.shade200),
+                    backgroundColor: Colors.red.shade200,
+                  ),
                   onPressed: onCanceled,
                   child: Text('Cancel'),
                 ),
