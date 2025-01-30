@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:hw26/data/task.dart';
+import 'package:hw26/helpers/formatted_datetime.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
   final void Function() checkTask;
   final void Function() deleteTask;
-  const TaskCard(
-      {super.key,
-      required this.task,
-      required this.checkTask,
-      required this.deleteTask});
+  final void Function() checkDeadLine;
+  final bool isDoneInTime;
+  const TaskCard({
+    super.key,
+    required this.task,
+    required this.checkTask,
+    required this.deleteTask,
+    required this.checkDeadLine,
+    required this.isDoneInTime,
+  });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final titleMediumStyle = theme.textTheme.titleMedium!;
+    final titleSmallStyle = theme.textTheme.titleSmall!;
     return Card(
       elevation: 9.0,
       color: Colors.blue.shade100,
@@ -26,7 +33,10 @@ class TaskCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
-                    onPressed: checkTask,
+                    onPressed: () {
+                      checkTask();
+                      checkDeadLine();
+                    },
                     icon: Icon(
                       task.isCompleted
                           ? Icons.check_box
@@ -48,7 +58,16 @@ class TaskCard extends StatelessWidget {
             ),
             SizedBox(height: 5),
             Row(
-              children: [],
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  formattedDateTime(task.deadLine),
+                  style: titleSmallStyle.copyWith(
+                      color: task.isDoneInTime
+                          ? Colors.green.shade600
+                          : Colors.red.shade600),
+                )
+              ],
             )
           ],
         ),

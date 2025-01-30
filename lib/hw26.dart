@@ -12,11 +12,36 @@ class Hw26 extends StatefulWidget {
 }
 
 class _Hw26State extends State<Hw26> {
+  bool isDoneInTime = false;
   List<Task> tasks = [
-    Task(title: 'Продать Li 9', isCompleted: false),
-    Task(title: 'Доделать Flutter HomeWork', isCompleted: false),
-    Task(title: 'Создать макет сайта', isCompleted: false),
-    Task(title: 'Проверить давление в колесах', isCompleted: false),
+    Task(
+      title: 'Продать Li 9',
+      isCompleted: false,
+      deadLine: DateTime.now(),
+      finalTime: DateTime.now(),
+      isDoneInTime: false,
+    ),
+    Task(
+      title: 'Доделать Flutter HomeWork',
+      isCompleted: false,
+      deadLine: DateTime(2025, 1, 31, 14, 14),
+      finalTime: DateTime.now(),
+      isDoneInTime: false,
+    ),
+    Task(
+      title: 'Создать макет сайта',
+      isCompleted: false,
+      deadLine: DateTime(2025, 1, 29, 15, 15),
+      finalTime: DateTime.now(),
+      isDoneInTime: false,
+    ),
+    Task(
+      title: 'Проверить давление в колесах',
+      isCompleted: false,
+      deadLine: DateTime.now(),
+      finalTime: DateTime.now(),
+      isDoneInTime: false,
+    ),
   ];
 
   void addTask(Task addTask) {
@@ -28,6 +53,12 @@ class _Hw26State extends State<Hw26> {
   void changeCondition(Task task) {
     setState(() {
       task.isCompleted = !task.isCompleted;
+    });
+  }
+
+  void checkDeadLine(Task task) {
+    setState(() {
+      task.isDoneInTime = task.finalTime.compareTo(task.deadLine) <= 0;
     });
   }
 
@@ -66,6 +97,8 @@ class _Hw26State extends State<Hw26> {
         tasks: tasks,
         checkTask: changeCondition,
         deleteTask: deleteTask,
+        checkDeadLine: checkDeadLine,
+        isDoneInTime: isDoneInTime,
       ),
     );
   }

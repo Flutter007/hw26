@@ -7,21 +7,21 @@ String _addZero(int dateTimeValue) {
   return dateTimeValue.toString();
 }
 
-String formatDate(DateTime dateTime) {
+String formattedDate(DateTime dateTime) {
   final day = _addZero(dateTime.day);
   final month = _addZero(dateTime.month);
-  final year = _addZero(dateTime.year);
+  final year = dateTime.year;
   return '$day.$month.$year';
 }
 
-String formatTime(TimeOfDay time) {
+String formattedTime(TimeOfDay time) {
   final hour = _addZero(time.hour);
   final minutes = _addZero(time.minute);
   return '$hour:$minutes';
 }
 
-String formatDateTime(DateTime dateTime) {
-  final date = formatDate(dateTime);
-  final time = formatTime(TimeOfDay.fromDateTime(dateTime));
+String formattedDateTime(DateTime dateTime) {
+  final date = formattedDate(dateTime);
+  final time = formattedTime(TimeOfDay.fromDateTime(dateTime));
   return '$date $time';
 }

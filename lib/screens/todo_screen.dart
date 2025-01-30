@@ -6,11 +6,15 @@ class TodoScreen extends StatelessWidget {
   final List<Task> tasks;
   final void Function(Task) checkTask;
   final void Function(Task) deleteTask;
+  final void Function(Task) checkDeadLine;
+  final bool isDoneInTime;
   const TodoScreen(
       {super.key,
       required this.tasks,
       required this.checkTask,
-      required this.deleteTask});
+      required this.deleteTask,
+      required this.checkDeadLine,
+      required this.isDoneInTime});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +24,8 @@ class TodoScreen extends StatelessWidget {
                 task: task,
                 checkTask: () => checkTask(task),
                 deleteTask: () => deleteTask(task),
+                checkDeadLine: () => checkDeadLine(task),
+                isDoneInTime: task.isDoneInTime,
               ))
           .toList(),
     );
