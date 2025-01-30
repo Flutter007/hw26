@@ -20,27 +20,36 @@ class TaskCard extends StatelessWidget {
       color: Colors.blue.shade100,
       child: Padding(
         padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+        child: Column(
           children: [
-            IconButton(
-                onPressed: checkTask,
-                icon: Icon(
-                  task.isCompleted
-                      ? Icons.check_box
-                      : Icons.check_box_outline_blank_sharp,
-                )),
-            Expanded(
-              child: Text(
-                  textAlign: TextAlign.left,
-                  task.title,
-                  style: task.isCompleted
-                      ? titleMediumStyle.copyWith(
-                          color: Colors.grey,
-                          decoration: TextDecoration.lineThrough)
-                      : titleMediumStyle),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                IconButton(
+                    onPressed: checkTask,
+                    icon: Icon(
+                      task.isCompleted
+                          ? Icons.check_box
+                          : Icons.check_box_outline_blank_sharp,
+                    )),
+                Expanded(
+                  child: Text(
+                      textAlign: TextAlign.left,
+                      task.title,
+                      style: task.isCompleted
+                          ? titleMediumStyle.copyWith(
+                              color: Colors.grey,
+                              decoration: TextDecoration.lineThrough)
+                          : titleMediumStyle),
+                ),
+                IconButton(
+                    onPressed: deleteTask, icon: Icon(Icons.delete_outline)),
+              ],
             ),
-            IconButton(onPressed: deleteTask, icon: Icon(Icons.delete_outline)),
+            SizedBox(height: 5),
+            Row(
+              children: [],
+            )
           ],
         ),
       ),
