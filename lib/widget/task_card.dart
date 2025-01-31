@@ -8,6 +8,7 @@ class TaskCard extends StatelessWidget {
   final void Function() deleteTask;
   final void Function() checkDeadLine;
   final bool isDoneInTime;
+
   const TaskCard({
     super.key,
     required this.task,
@@ -21,7 +22,7 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final titleMediumStyle = theme.textTheme.titleMedium!;
-    final titleSmallStyle = theme.textTheme.titleSmall!;
+
     return Card(
       elevation: 9.0,
       color: Colors.blue.shade100,
@@ -33,15 +34,16 @@ class TaskCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 IconButton(
-                    onPressed: () {
-                      checkTask();
-                      checkDeadLine();
-                    },
-                    icon: Icon(
-                      task.isCompleted
-                          ? Icons.check_box
-                          : Icons.check_box_outline_blank_sharp,
-                    )),
+                  onPressed: () {
+                    checkTask();
+                    checkDeadLine();
+                  },
+                  icon: Icon(
+                    task.isCompleted
+                        ? Icons.check_box
+                        : Icons.check_box_outline_blank_sharp,
+                  ),
+                ),
                 Expanded(
                   child: Text(
                       textAlign: TextAlign.left,
@@ -53,7 +55,9 @@ class TaskCard extends StatelessWidget {
                           : titleMediumStyle),
                 ),
                 IconButton(
-                    onPressed: deleteTask, icon: Icon(Icons.delete_outline)),
+                  onPressed: deleteTask,
+                  icon: Icon(Icons.delete_outline),
+                ),
               ],
             ),
             SizedBox(height: 5),
@@ -62,10 +66,13 @@ class TaskCard extends StatelessWidget {
               children: [
                 Text(
                   formattedDateTime(task.deadLine),
-                  style: titleSmallStyle.copyWith(
-                      color: task.isDoneInTime
-                          ? Colors.green.shade600
-                          : Colors.red.shade600),
+                  style: titleMediumStyle.copyWith(
+                    color: task.isCompleted
+                        ? (task.isDoneInTime
+                            ? Colors.green.shade600
+                            : Colors.red.shade600)
+                        : Colors.grey.shade700,
+                  ),
                 )
               ],
             )

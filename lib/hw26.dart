@@ -24,14 +24,14 @@ class _Hw26State extends State<Hw26> {
     Task(
       title: 'Доделать Flutter HomeWork',
       isCompleted: false,
-      deadLine: DateTime(2025, 1, 31, 14, 14),
+      deadLine: DateTime(2025, 2, 22, 14, 14),
       finalTime: DateTime.now(),
       isDoneInTime: false,
     ),
     Task(
       title: 'Создать макет сайта',
       isCompleted: false,
-      deadLine: DateTime(2025, 1, 29, 15, 15),
+      deadLine: DateTime(2025, 3, 30, 15, 15),
       finalTime: DateTime.now(),
       isDoneInTime: false,
     ),
