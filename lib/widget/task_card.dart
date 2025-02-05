@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hw26/data/task.dart';
+import 'package:hw26/model/task.dart';
 import 'package:hw26/helpers/formatted_datetime.dart';
 
 class TaskCard extends StatelessWidget {
@@ -75,7 +75,7 @@ class TaskCard extends StatelessWidget {
                   ),
                 )
               ],
-            )
+            ),
           ],
         ),
       ),

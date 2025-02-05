@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hw26/data/task.dart';
+import 'package:hw26/model/task.dart';
 import 'package:hw26/widget/task_card.dart';
 
 class TodoScreen extends StatelessWidget {

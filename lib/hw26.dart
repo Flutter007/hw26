@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'package:hw26/data/task.dart';
+import 'package:hw26/model/task.dart';
 import 'package:hw26/screens/todo_screen.dart';
 import 'package:hw26/widget/add_task.dart';
 
@@ -20,6 +19,7 @@ class _Hw26State extends State<Hw26> {
       deadLine: DateTime.now(),
       finalTime: DateTime.now(),
       isDoneInTime: false,
+      categoryId: 'work',
     ),
     Task(
       title: 'Доделать Flutter HomeWork',
@@ -27,20 +27,31 @@ class _Hw26State extends State<Hw26> {
       deadLine: DateTime(2025, 2, 22, 14, 14),
       finalTime: DateTime.now(),
       isDoneInTime: false,
+      categoryId: 'study',
     ),
     Task(
-      title: 'Создать макет сайта',
+      title: 'Обсудить с коллегой макет сайта',
       isCompleted: false,
       deadLine: DateTime(2025, 3, 30, 15, 15),
       finalTime: DateTime.now(),
       isDoneInTime: false,
+      categoryId: 'meeting',
     ),
     Task(
-      title: 'Проверить давление в колесах',
+      title: 'Сделать Кардио-Тренировку',
       isCompleted: false,
       deadLine: DateTime.now(),
       finalTime: DateTime.now(),
       isDoneInTime: false,
+      categoryId: 'training',
+    ),
+    Task(
+      title: 'Купить корм коту!!!!',
+      isCompleted: false,
+      deadLine: DateTime.now(),
+      finalTime: DateTime.now(),
+      isDoneInTime: false,
+      categoryId: 'urgent',
     ),
   ];
 

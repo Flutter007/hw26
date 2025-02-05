@@ -4,6 +4,7 @@ class Task {
   DateTime deadLine;
   DateTime finalTime;
   bool isDoneInTime;
+  final String categoryId;
 
   Task({
     required this.title,
@@ -11,5 +12,6 @@ class Task {
     required this.deadLine,
     required this.finalTime,
     required this.isDoneInTime,
+    required this.categoryId,
   });
 }

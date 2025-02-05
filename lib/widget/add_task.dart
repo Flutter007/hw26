@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hw26/data/task.dart';
+import 'package:hw26/model/task.dart';
 import 'package:hw26/helpers/formatted_datetime.dart';
 
 class AddTask extends StatefulWidget {
@@ -43,6 +43,7 @@ class _AddTaskState extends State<AddTask> {
         deadLine: dateTime,
         finalTime: DateTime.now(),
         isDoneInTime: false,
+        categoryId: 'urgent',
       );
       widget.onTaskCreated(newTask);
       onCanceled();
@@ -53,6 +54,7 @@ class _AddTaskState extends State<AddTask> {
         deadLine: dateTime,
         finalTime: DateTime.now(),
         isDoneInTime: false,
+        categoryId: 'urgent',
       );
       widget.onTaskCreated(emptyTask);
     }
