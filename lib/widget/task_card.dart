@@ -22,7 +22,8 @@ class TaskCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final titleMediumStyle = theme.textTheme.titleMedium!;
-
+    final category = task.category;
+    bool isUrgent = category.label == 'Urgent';
     return Card(
       elevation: 9.0,
       color: Colors.blue.shade100,
@@ -62,8 +63,28 @@ class TaskCard extends StatelessWidget {
             ),
             SizedBox(height: 5),
             Row(
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Row(
+                  children: [
+                    Icon(
+                      category.icon,
+                      size: 24,
+                      color: isUrgent
+                          ? theme.colorScheme.error
+                          : theme.colorScheme.tertiary,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      category.label,
+                      style: isUrgent
+                          ? titleMediumStyle.copyWith(
+                              color: Colors.red.shade900,
+                            )
+                          : titleMediumStyle,
+                    ),
+                  ],
+                ),
                 Text(
                   formattedDateTime(task.deadLine),
                   style: titleMediumStyle.copyWith(

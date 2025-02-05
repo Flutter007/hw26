@@ -18,16 +18,18 @@ class TodoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: tasks
-          .map((task) => TaskCard(
-                task: task,
-                checkTask: () => checkTask(task),
-                deleteTask: () => deleteTask(task),
-                checkDeadLine: () => checkDeadLine(task),
-                isDoneInTime: task.isDoneInTime,
-              ))
-          .toList(),
+    return SingleChildScrollView(
+      child: Column(
+        children: tasks
+            .map((task) => TaskCard(
+                  task: task,
+                  checkTask: () => checkTask(task),
+                  deleteTask: () => deleteTask(task),
+                  checkDeadLine: () => checkDeadLine(task),
+                  isDoneInTime: task.isDoneInTime,
+                ))
+            .toList(),
+      ),
     );
   }
 }

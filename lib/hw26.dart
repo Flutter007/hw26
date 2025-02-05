@@ -81,6 +81,8 @@ class _Hw26State extends State<Hw26> {
 
   void openAddSheet() {
     showModalBottomSheet(
+      isScrollControlled: true,
+      useSafeArea: true,
       context: context,
       builder: (ctx) => AddTask(onTaskCreated: addTask),
     );

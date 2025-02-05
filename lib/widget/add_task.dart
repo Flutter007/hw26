@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hw26/data/categories_data.dart';
 import 'package:hw26/model/task.dart';
 import 'package:hw26/helpers/formatted_datetime.dart';
 
@@ -14,6 +15,7 @@ class _AddTaskState extends State<AddTask> {
   var title = '';
   var selectedDeadLine = DateTime.now();
   var selectedTimeOfDeadLine = TimeOfDay.now();
+  String? selectedCategory;
   var dateControl = TextEditingController();
   var timeControl = TextEditingController();
 
@@ -36,28 +38,17 @@ class _AddTaskState extends State<AddTask> {
       selectedTimeOfDeadLine.hour,
       selectedTimeOfDeadLine.minute,
     );
-    if (title != '') {
-      final newTask = Task(
-        title: title,
-        isCompleted: false,
-        deadLine: dateTime,
-        finalTime: DateTime.now(),
-        isDoneInTime: false,
-        categoryId: 'urgent',
-      );
-      widget.onTaskCreated(newTask);
-      onCanceled();
-    } else {
-      final emptyTask = Task(
-        title: 'Пустая задача',
-        isCompleted: false,
-        deadLine: dateTime,
-        finalTime: DateTime.now(),
-        isDoneInTime: false,
-        categoryId: 'urgent',
-      );
-      widget.onTaskCreated(emptyTask);
-    }
+
+    final newTask = Task(
+      title: title.trim(),
+      isCompleted: false,
+      deadLine: dateTime,
+      finalTime: DateTime.now(),
+      isDoneInTime: false,
+      categoryId: selectedCategory!,
+    );
+    widget.onTaskCreated(newTask);
+    onCanceled();
   }
 
   void onDateLineTap() async {
@@ -80,6 +71,10 @@ class _AddTaskState extends State<AddTask> {
     }
   }
 
+  bool isWrongFilled() {
+    return title.trim().isEmpty || selectedCategory == null;
+  }
+
   void onTimeTap() async {
     final selectedDeadTime = await showTimePicker(
       context: context,
@@ -95,9 +90,11 @@ class _AddTaskState extends State<AddTask> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final bottomInsetCheck = MediaQuery.of(context).viewInsets.bottom;
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.fromLTRB(20, 20, 20, 20 + bottomInsetCheck),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -139,6 +136,19 @@ class _AddTaskState extends State<AddTask> {
               ),
             ],
           ),
+          SizedBox(width: 10),
+          DropdownMenu(
+              expandedInsets: EdgeInsets.zero,
+              keyboardType: TextInputType.text,
+              label: Text('Category : '),
+              inputDecorationTheme: theme.inputDecorationTheme,
+              onSelected: (value) => setState(() => selectedCategory = value),
+              dropdownMenuEntries: categories
+                  .map((category) => DropdownMenuEntry(
+                      value: category.id,
+                      leadingIcon: Icon(category.icon),
+                      label: category.label))
+                  .toList()),
           SizedBox(
             height: 40,
           ),
@@ -149,7 +159,7 @@ class _AddTaskState extends State<AddTask> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green.shade200,
                   ),
-                  onPressed: onAdd,
+                  onPressed: isWrongFilled() ? null : onAdd,
                   child: Text('Add'),
                 ),
               ),
