@@ -138,17 +138,21 @@ class _AddTaskState extends State<AddTask> {
           ),
           SizedBox(width: 10),
           DropdownMenu(
-              expandedInsets: EdgeInsets.zero,
-              keyboardType: TextInputType.text,
-              label: Text('Category : '),
-              inputDecorationTheme: theme.inputDecorationTheme,
-              onSelected: (value) => setState(() => selectedCategory = value),
-              dropdownMenuEntries: categories
-                  .map((category) => DropdownMenuEntry(
+            expandedInsets: EdgeInsets.zero,
+            keyboardType: TextInputType.text,
+            label: Text('Category : '),
+            inputDecorationTheme: theme.inputDecorationTheme,
+            onSelected: (value) => setState(() => selectedCategory = value),
+            dropdownMenuEntries: categories
+                .where((task) => task.id != 'all_tasks')
+                .map(
+                  (category) => DropdownMenuEntry(
                       value: category.id,
                       leadingIcon: Icon(category.icon),
-                      label: category.label))
-                  .toList()),
+                      label: category.label),
+                )
+                .toList(),
+          ),
           SizedBox(
             height: 40,
           ),

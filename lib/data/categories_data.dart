@@ -3,6 +3,11 @@ import 'package:hw26/model/task_category.dart';
 
 final categories = [
   TaskCategory(
+    id: 'all_tasks',
+    label: 'All Tasks',
+    icon: Icons.list_alt_outlined,
+  ),
+  TaskCategory(
     id: 'work',
     label: 'Work',
     icon: Icons.attach_money_outlined,
@@ -26,5 +31,5 @@ final categories = [
     id: 'training',
     label: 'Training',
     icon: Icons.sports_gymnastics_outlined,
-  )
+  ),
 ];

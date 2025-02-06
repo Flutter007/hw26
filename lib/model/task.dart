@@ -7,7 +7,7 @@ class Task {
   DateTime deadLine;
   DateTime finalTime;
   bool isDoneInTime;
-  final String categoryId;
+  String categoryId;
 
   Task({
     required this.title,

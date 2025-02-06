@@ -3,6 +3,8 @@ import 'package:hw26/model/task.dart';
 import 'package:hw26/screens/todo_screen.dart';
 import 'package:hw26/widget/add_task.dart';
 
+import 'data/categories_data.dart';
+
 class Hw26 extends StatefulWidget {
   const Hw26({super.key});
 
@@ -12,6 +14,8 @@ class Hw26 extends StatefulWidget {
 
 class _Hw26State extends State<Hw26> {
   bool isDoneInTime = false;
+  String? selectedInfoCategory = 'all_tasks';
+
   List<Task> tasks = [
     Task(
       title: 'Продать Li 9',
@@ -92,10 +96,26 @@ class _Hw26State extends State<Hw26> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 70,
         title: Text(
           'ToDo List!',
         ),
         actions: [
+          DropdownMenu(
+            initialSelection: selectedInfoCategory,
+            width: 150,
+            label: Text('Category'),
+            onSelected: (value) => setState(() => selectedInfoCategory = value),
+            dropdownMenuEntries: categories
+                .map(
+                  (category) => DropdownMenuEntry(
+                    value: category.id,
+                    leadingIcon: Icon(category.icon),
+                    label: category.label,
+                  ),
+                )
+                .toList(),
+          ),
           IconButton(
             onPressed: openAddSheet,
             icon: Icon(
@@ -107,7 +127,13 @@ class _Hw26State extends State<Hw26> {
         ],
       ),
       body: TodoScreen(
-        tasks: tasks,
+        tasks: (selectedInfoCategory == 'all_tasks')
+            ? tasks
+            : tasks
+                .where(
+                  (task) => task.categoryId == selectedInfoCategory,
+                )
+                .toList(),
         checkTask: changeCondition,
         deleteTask: deleteTask,
         checkDeadLine: checkDeadLine,
