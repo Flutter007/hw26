@@ -26,6 +26,13 @@ class _AddTaskState extends State<AddTask> {
     timeControl.text = formattedTime(selectedTimeOfDeadLine);
   }
 
+  @override
+  void dispose() {
+    dateControl.dispose();
+    timeControl.dispose();
+    super.dispose();
+  }
+
   void onCanceled() {
     Navigator.pop(context);
   }
