@@ -5,7 +5,7 @@ import 'package:hw26/helpers/formatted_datetime.dart';
 class TaskCard extends StatelessWidget {
   final Task task;
   final void Function() checkTask;
-  final void Function() deleteTask;
+
   final void Function() checkDeadLine;
   final bool isDoneInTime;
 
@@ -13,7 +13,6 @@ class TaskCard extends StatelessWidget {
     super.key,
     required this.task,
     required this.checkTask,
-    required this.deleteTask,
     required this.checkDeadLine,
     required this.isDoneInTime,
   });
@@ -55,10 +54,6 @@ class TaskCard extends StatelessWidget {
                               decoration: TextDecoration.lineThrough)
                           : titleMediumStyle),
                 ),
-                IconButton(
-                  onPressed: deleteTask,
-                  icon: Icon(Icons.delete_outline),
-                ),
               ],
             ),
             SizedBox(height: 5),
@@ -86,7 +81,7 @@ class TaskCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  formattedDateTime(task.deadLine),
+                  formattedDateTime(task.deadLine!),
                   style: titleMediumStyle.copyWith(
                     color: task.isCompleted
                         ? (task.isDoneInTime

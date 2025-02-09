@@ -5,7 +5,8 @@ import 'package:hw26/helpers/formatted_datetime.dart';
 
 class AddTask extends StatefulWidget {
   final void Function(Task newTask) onTaskCreated;
-  const AddTask({super.key, required this.onTaskCreated});
+  final Task? existingTask;
+  const AddTask({super.key, required this.onTaskCreated, this.existingTask});
 
   @override
   State<AddTask> createState() => _AddTaskState();
@@ -13,23 +14,47 @@ class AddTask extends StatefulWidget {
 
 class _AddTaskState extends State<AddTask> {
   var title = '';
-  var selectedDeadLine = DateTime.now();
-  var selectedTimeOfDeadLine = TimeOfDay.now();
+  DateTime? selectedDeadLine = DateTime.now();
+  TimeOfDay? selectedTimeOfDeadLine = TimeOfDay.now();
   String? selectedCategory;
-  var dateControl = TextEditingController();
-  var timeControl = TextEditingController();
+
+  final dateControl = TextEditingController();
+  final timeControl = TextEditingController();
+  final titleControl = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    dateControl.text = formattedDate(selectedDeadLine);
-    timeControl.text = formattedTime(selectedTimeOfDeadLine);
+    if (widget.existingTask != null) {
+      final existingTask = widget.existingTask!;
+      titleControl.text = existingTask.title;
+      selectedDeadLine = existingTask.deadLine;
+      selectedTimeOfDeadLine = TimeOfDay.fromDateTime(existingTask.deadLine!);
+      selectedCategory = existingTask.categoryId;
+    }
+
+    if (selectedDeadLine != null) {
+      dateControl.text = formattedDate(selectedDeadLine!);
+    }
+    if (selectedTimeOfDeadLine != null) {
+      timeControl.text = formattedTime(selectedTimeOfDeadLine!);
+    }
+  }
+
+  void clearTimeText() {
+    setState(() {
+      dateControl.text = '';
+      timeControl.text = '';
+      selectedDeadLine = null;
+      selectedTimeOfDeadLine = null;
+    });
   }
 
   @override
   void dispose() {
     dateControl.dispose();
     timeControl.dispose();
+    titleControl.dispose();
     super.dispose();
   }
 
@@ -38,16 +63,20 @@ class _AddTaskState extends State<AddTask> {
   }
 
   void onAdd() {
-    final dateTime = DateTime(
-      selectedDeadLine.year,
-      selectedDeadLine.month,
-      selectedDeadLine.day,
-      selectedTimeOfDeadLine.hour,
-      selectedTimeOfDeadLine.minute,
-    );
+    DateTime? dateTime;
+    if (selectedDeadLine != null && selectedTimeOfDeadLine != null) {
+      dateTime = DateTime(
+        selectedDeadLine!.year,
+        selectedDeadLine!.month,
+        selectedDeadLine!.day,
+        selectedTimeOfDeadLine!.hour,
+        selectedTimeOfDeadLine!.minute,
+      );
+    }
 
     final newTask = Task(
-      title: title.trim(),
+      id: widget.existingTask?.id,
+      title: titleControl.text.trim(),
       isCompleted: false,
       deadLine: dateTime,
       finalTime: DateTime.now(),
@@ -67,7 +96,7 @@ class _AddTaskState extends State<AddTask> {
       context: context,
       firstDate: firstDate,
       lastDate: lastDate,
-      initialDate: selectedDeadLine,
+      initialDate: selectedDeadLine ?? DateTime.now(),
     );
 
     if (dateFromUser != null) {
@@ -79,13 +108,13 @@ class _AddTaskState extends State<AddTask> {
   }
 
   bool isWrongFilled() {
-    return title.trim().isEmpty || selectedCategory == null;
+    return titleControl.text.trim().isEmpty || selectedCategory == null;
   }
 
   void onTimeTap() async {
     final selectedDeadTime = await showTimePicker(
       context: context,
-      initialTime: selectedTimeOfDeadLine,
+      initialTime: selectedTimeOfDeadLine!,
     );
     if (selectedDeadTime != null) {
       setState(() {
@@ -126,16 +155,16 @@ class _AddTaskState extends State<AddTask> {
                     label: Text("DeadLine's Time"),
                   ),
                 ),
-              )
+              ),
+              IconButton(
+                  onPressed: clearTimeText, icon: Icon(Icons.close_outlined))
             ],
           ),
           Row(
             children: [
               Expanded(
                 child: TextField(
-                  onChanged: (value) => setState(() {
-                    title = value;
-                  }),
+                  controller: titleControl,
                   decoration: InputDecoration(
                     label: Text('Title of task :'),
                   ),
@@ -147,6 +176,7 @@ class _AddTaskState extends State<AddTask> {
           DropdownMenu(
             expandedInsets: EdgeInsets.zero,
             keyboardType: TextInputType.text,
+            initialSelection: selectedCategory,
             label: Text('Category : '),
             inputDecorationTheme: theme.inputDecorationTheme,
             onSelected: (value) => setState(() => selectedCategory = value),

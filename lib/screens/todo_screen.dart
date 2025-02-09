@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hw26/model/task.dart';
 import 'package:hw26/widget/task_card.dart';
 
 class TodoScreen extends StatelessWidget {
   final List<Task> tasks;
   final void Function(Task) checkTask;
-  final void Function(Task) deleteTask;
+  final void Function(String id) deleteTask;
   final void Function(Task) checkDeadLine;
+  final void Function(String id) onTaskEdited;
   final bool isDoneInTime;
   const TodoScreen(
       {super.key,
@@ -14,21 +16,46 @@ class TodoScreen extends StatelessWidget {
       required this.checkTask,
       required this.deleteTask,
       required this.checkDeadLine,
-      required this.isDoneInTime});
+      required this.isDoneInTime,
+      required this.onTaskEdited});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: tasks
-            .map((task) => TaskCard(
-                  task: task,
-                  checkTask: () => checkTask(task),
-                  deleteTask: () => deleteTask(task),
-                  checkDeadLine: () => checkDeadLine(task),
-                  isDoneInTime: task.isDoneInTime,
-                ))
-            .toList(),
+    final theme = Theme.of(context);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListView.builder(
+        itemBuilder: (ctx, index) {
+          final task = tasks[index];
+          return Slidable(
+            endActionPane: ActionPane(
+              extentRatio: 0.4,
+              motion: ScrollMotion(),
+              children: [
+                SlidableAction(
+                  onPressed: (ctx) => deleteTask(task.id),
+                  icon: Icons.delete,
+                  label: 'Delete',
+                  backgroundColor: theme.colorScheme.error,
+                  padding: EdgeInsets.zero,
+                ),
+                SlidableAction(
+                  onPressed: (ctx) => onTaskEdited(task.id),
+                  icon: Icons.edit,
+                  label: 'Edit',
+                  backgroundColor: theme.colorScheme.secondary,
+                  padding: EdgeInsets.zero,
+                ),
+              ],
+            ),
+            child: TaskCard(
+                task: task,
+                checkTask: () => checkTask(task),
+                checkDeadLine: () => checkDeadLine(task),
+                isDoneInTime: task.isDoneInTime),
+          );
+        },
+        itemCount: tasks.length,
       ),
     );
   }

@@ -72,14 +72,27 @@ class _Hw26State extends State<Hw26> {
   }
 
   void checkDeadLine(Task task) {
+    if (task.deadLine != null && task.finalTime != null) {
+      setState(() {
+        task.isDoneInTime = task.finalTime!.compareTo(task.deadLine!) <= 0;
+      });
+    } else {
+      setState(() {
+        task.isDoneInTime = false;
+      });
+    }
+  }
+
+  void deleteTask(String id) {
     setState(() {
-      task.isDoneInTime = task.finalTime.compareTo(task.deadLine) <= 0;
+      tasks.removeWhere((task) => task.id == id);
     });
   }
 
-  void deleteTask(Task task) {
+  void editTask(Task editTask) {
     setState(() {
-      tasks.remove(task);
+      final index = tasks.indexWhere((task) => task.id == editTask.id);
+      tasks[index] = editTask;
     });
   }
 
@@ -89,6 +102,19 @@ class _Hw26State extends State<Hw26> {
       useSafeArea: true,
       context: context,
       builder: (ctx) => AddTask(onTaskCreated: addTask),
+    );
+  }
+
+  void openEditTaskSheet(String id) {
+    final existingTask = tasks.firstWhere((task) => task.id == id);
+    showModalBottomSheet(
+      isScrollControlled: true,
+      useSafeArea: true,
+      context: context,
+      builder: (ctx) => AddTask(
+        onTaskCreated: editTask,
+        existingTask: existingTask,
+      ),
     );
   }
 
@@ -137,6 +163,7 @@ class _Hw26State extends State<Hw26> {
         checkTask: changeCondition,
         deleteTask: deleteTask,
         checkDeadLine: checkDeadLine,
+        onTaskEdited: openEditTaskSheet,
         isDoneInTime: isDoneInTime,
       ),
     );
