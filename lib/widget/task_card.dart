@@ -22,6 +22,7 @@ class TaskCard extends StatelessWidget {
     final titleMediumStyle = theme.textTheme.titleMedium!;
     final category = task.category;
     bool isUrgent = category.label == 'Urgent';
+    bool isNotNull = task.deadLine != null;
     return Card(
       elevation: 9.0,
       color: Colors.blue.shade100,
@@ -45,13 +46,14 @@ class TaskCard extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                      textAlign: TextAlign.left,
-                      task.title,
-                      style: task.isCompleted
-                          ? titleMediumStyle.copyWith(
-                              color: Colors.grey,
-                              decoration: TextDecoration.lineThrough)
-                          : titleMediumStyle),
+                    textAlign: TextAlign.left,
+                    task.title,
+                    style: task.isCompleted
+                        ? titleMediumStyle.copyWith(
+                            color: Colors.grey,
+                            decoration: TextDecoration.lineThrough)
+                        : titleMediumStyle,
+                  ),
                 ),
               ],
             ),
@@ -80,11 +82,9 @@ class TaskCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  task.deadLine != null
-                      ? formattedDateTime(task.deadLine)
-                      : 'No deadline',
+                  isNotNull ? formattedDateTime(task.deadLine) : 'No deadline',
                   style: titleMediumStyle.copyWith(
-                    color: task.isCompleted
+                    color: task.isCompleted && isNotNull
                         ? (task.isDoneInTime
                             ? Colors.green.shade600
                             : Colors.red.shade600)

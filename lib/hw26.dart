@@ -28,7 +28,7 @@ class _Hw26State extends State<Hw26> {
     Task(
       title: 'Доделать Flutter HomeWork',
       isCompleted: false,
-      deadLine: DateTime(2025, 3, 22, 14, 14),
+      deadLine: DateTime(2025, 4, 4, 4, 4),
       finalTime: DateTime.now(),
       isDoneInTime: false,
       categoryId: 'study',
@@ -36,7 +36,7 @@ class _Hw26State extends State<Hw26> {
     Task(
       title: 'Обсудить с коллегой макет сайта',
       isCompleted: false,
-      deadLine: DateTime(2024, 3, 30, 15, 15),
+      deadLine: DateTime(2025, 1, 1, 1, 1),
       finalTime: DateTime.now(),
       isDoneInTime: false,
       categoryId: 'meeting',
@@ -44,7 +44,7 @@ class _Hw26State extends State<Hw26> {
     Task(
       title: 'Сделать Кардио-Тренировку',
       isCompleted: false,
-      deadLine: DateTime(2024, 6, 26, 06, 06),
+      deadLine: DateTime(2025, 2, 2, 2, 2),
       finalTime: DateTime.now(),
       isDoneInTime: false,
       categoryId: 'training',
@@ -52,9 +52,17 @@ class _Hw26State extends State<Hw26> {
     Task(
       title: 'Купить корм коту!!!!',
       isCompleted: false,
-      deadLine: DateTime(2025, 2, 2, 22, 22),
+      deadLine: DateTime(2025, 3, 3, 3, 3),
       isDoneInTime: false,
       categoryId: 'urgent',
+      finalTime: DateTime.now(),
+    ),
+    Task(
+      title: 'Закончить курс Flutter',
+      isCompleted: false,
+      isDoneInTime: false,
+      categoryId: 'study',
+      deadLine: null,
       finalTime: DateTime.now(),
     ),
   ];
@@ -114,13 +122,12 @@ class _Hw26State extends State<Hw26> {
 
   @override
   Widget build(BuildContext context) {
-    tasks.sort((a, b) => a.title.compareTo(b.title));
     tasks.sort((a, b) {
       if (a.deadLine == null && b.deadLine == null) {
-        return 0;
-      } else if (b.deadLine != null && a.deadLine == null) {
+        return a.title.compareTo(b.title);
+      } else if (a.deadLine == null) {
         return 1;
-      } else if (b.deadLine == null && a.deadLine != null) {
+      } else if (b.deadLine == null) {
         return -1;
       } else {
         return a.deadLine!.compareTo(b.deadLine!);

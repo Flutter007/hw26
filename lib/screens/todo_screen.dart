@@ -51,10 +51,11 @@ class TodoScreen extends StatelessWidget {
               ],
             ),
             child: TaskCard(
-                task: task,
-                checkTask: () => checkTask(task),
-                checkDeadLine: () => checkDeadLine(task),
-                isDoneInTime: task.isDoneInTime),
+              task: task,
+              checkTask: () => checkTask(task),
+              checkDeadLine: () => checkDeadLine(task),
+              isDoneInTime: task.isDoneInTime,
+            ),
           );
         },
         itemCount: tasks.length,
