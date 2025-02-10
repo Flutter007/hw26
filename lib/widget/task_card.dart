@@ -5,7 +5,6 @@ import 'package:hw26/helpers/formatted_datetime.dart';
 class TaskCard extends StatelessWidget {
   final Task task;
   final void Function() checkTask;
-
   final void Function() checkDeadLine;
   final bool isDoneInTime;
 
@@ -81,7 +80,9 @@ class TaskCard extends StatelessWidget {
                   ],
                 ),
                 Text(
-                  formattedDateTime(task.deadLine!),
+                  task.deadLine != null
+                      ? formattedDateTime(task.deadLine)
+                      : 'No deadline',
                   style: titleMediumStyle.copyWith(
                     color: task.isCompleted
                         ? (task.isDoneInTime

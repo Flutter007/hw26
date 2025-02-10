@@ -23,28 +23,30 @@ class TodoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(12),
       child: ListView.builder(
         itemBuilder: (ctx, index) {
           final task = tasks[index];
           return Slidable(
             endActionPane: ActionPane(
-              extentRatio: 0.4,
+              extentRatio: 0.45,
               motion: ScrollMotion(),
               children: [
                 SlidableAction(
                   onPressed: (ctx) => deleteTask(task.id),
                   icon: Icons.delete,
+                  borderRadius: BorderRadius.circular(15),
                   label: 'Delete',
                   backgroundColor: theme.colorScheme.error,
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.all(15),
                 ),
                 SlidableAction(
                   onPressed: (ctx) => onTaskEdited(task.id),
                   icon: Icons.edit,
+                  borderRadius: BorderRadius.circular(15),
                   label: 'Edit',
                   backgroundColor: theme.colorScheme.secondary,
-                  padding: EdgeInsets.zero,
+                  padding: EdgeInsets.all(10),
                 ),
               ],
             ),

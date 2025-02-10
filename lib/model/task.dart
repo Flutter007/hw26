@@ -17,13 +17,20 @@ class Task {
     String? id,
     required this.title,
     required this.isCompleted,
-    required this.deadLine,
-    required this.finalTime,
     required this.isDoneInTime,
     required this.categoryId,
+    this.deadLine,
+    required this.finalTime,
   }) : id = id ?? uuid.v4();
 
   TaskCategory get category {
     return categories.firstWhere((category) => category.id == categoryId);
+  }
+
+  bool checkIfDoneInTime() {
+    if (deadLine == null) {
+      return true;
+    }
+    return finalTime!.compareTo(deadLine!) <= 0;
   }
 }

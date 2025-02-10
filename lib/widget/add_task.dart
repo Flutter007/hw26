@@ -29,7 +29,9 @@ class _AddTaskState extends State<AddTask> {
       final existingTask = widget.existingTask!;
       titleControl.text = existingTask.title;
       selectedDeadLine = existingTask.deadLine;
-      selectedTimeOfDeadLine = TimeOfDay.fromDateTime(existingTask.deadLine!);
+      selectedTimeOfDeadLine = existingTask.deadLine != null
+          ? TimeOfDay.fromDateTime(existingTask.deadLine!)
+          : null;
       selectedCategory = existingTask.categoryId;
     }
 
@@ -41,12 +43,13 @@ class _AddTaskState extends State<AddTask> {
     }
   }
 
-  void clearTimeText() {
+  void clearTimeText(Task? task) {
     setState(() {
       dateControl.text = '';
       timeControl.text = '';
       selectedDeadLine = null;
       selectedTimeOfDeadLine = null;
+      task?.deadLine = null;
     });
   }
 
@@ -64,6 +67,7 @@ class _AddTaskState extends State<AddTask> {
 
   void onAdd() {
     DateTime? dateTime;
+
     if (selectedDeadLine != null && selectedTimeOfDeadLine != null) {
       dateTime = DateTime(
         selectedDeadLine!.year,
@@ -77,11 +81,11 @@ class _AddTaskState extends State<AddTask> {
     final newTask = Task(
       id: widget.existingTask?.id,
       title: titleControl.text.trim(),
-      isCompleted: false,
       deadLine: dateTime,
-      finalTime: DateTime.now(),
+      isCompleted: false,
       isDoneInTime: false,
       categoryId: selectedCategory!,
+      finalTime: DateTime.now(),
     );
     widget.onTaskCreated(newTask);
     onCanceled();
@@ -114,7 +118,7 @@ class _AddTaskState extends State<AddTask> {
   void onTimeTap() async {
     final selectedDeadTime = await showTimePicker(
       context: context,
-      initialTime: selectedTimeOfDeadLine!,
+      initialTime: selectedTimeOfDeadLine ?? TimeOfDay.now(),
     );
     if (selectedDeadTime != null) {
       setState(() {
@@ -157,7 +161,9 @@ class _AddTaskState extends State<AddTask> {
                 ),
               ),
               IconButton(
-                  onPressed: clearTimeText, icon: Icon(Icons.close_outlined))
+                onPressed: () => clearTimeText(widget.existingTask),
+                icon: Icon(Icons.close_outlined),
+              )
             ],
           ),
           Row(
