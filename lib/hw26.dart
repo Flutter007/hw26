@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hw26/model/destination.dart';
 import 'package:hw26/model/task.dart';
+import 'package:hw26/screens/statistic_screen.dart';
 import 'package:hw26/screens/todo_screen.dart';
 import 'package:hw26/widget/add_task.dart';
 
@@ -15,7 +17,7 @@ class Hw26 extends StatefulWidget {
 class _Hw26State extends State<Hw26> {
   bool isDoneInTime = false;
   String? selectedInfoCategory = 'all_tasks';
-
+  int currentIndex = 0;
   List<Task> tasks = [
     Task(
       title: 'Продать Li 9',
@@ -120,27 +122,31 @@ class _Hw26State extends State<Hw26> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    tasks.sort((a, b) {
-      if (a.deadLine == null && b.deadLine == null) {
-        return a.title.compareTo(b.title);
-      } else if (a.deadLine == null) {
-        return 1;
-      } else if (b.deadLine == null) {
-        return -1;
-      } else {
-        return a.deadLine!.compareTo(b.deadLine!);
-      }
+  void updateIndex(int index) {
+    setState(() {
+      currentIndex = index;
     });
+  }
 
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 70,
-        title: Text(
-          'ToDo List!',
+  List<Destination> get destinations {
+    return [
+      Destination(
+        screenTitle: Text('ToDo list!'),
+        screen: TodoScreen(
+          tasks: (selectedInfoCategory == 'all_tasks')
+              ? tasks
+              : tasks
+                  .where(
+                    (task) => task.categoryId == selectedInfoCategory,
+                  )
+                  .toList(),
+          checkTask: changeCondition,
+          deleteTask: deleteTask,
+          checkDeadLine: checkDeadLine,
+          onTaskEdited: openEditTaskSheet,
+          isDoneInTime: isDoneInTime,
         ),
-        actions: [
+        appBarActions: [
           DropdownMenu(
             initialSelection: selectedInfoCategory,
             width: 150,
@@ -163,23 +169,65 @@ class _Hw26State extends State<Hw26> {
               color: Colors.blue.shade700,
               size: 33,
             ),
-          )
+          ),
         ],
+        navLabel: 'Tasks',
+        navIcon: Icons.task_outlined,
+        navSelectedIcon: Icons.task_rounded,
       ),
-      body: TodoScreen(
-        tasks: (selectedInfoCategory == 'all_tasks')
-            ? tasks
-            : tasks
-                .where(
-                  (task) => task.categoryId == selectedInfoCategory,
-                )
-                .toList(),
-        checkTask: changeCondition,
-        deleteTask: deleteTask,
-        checkDeadLine: checkDeadLine,
-        onTaskEdited: openEditTaskSheet,
-        isDoneInTime: isDoneInTime,
-      ),
-    );
+      Destination(
+        screenTitle: Text('Statistics!'),
+        screen: StatisticScreen(tasks: tasks),
+        navLabel: 'Stat',
+        navIcon: Icons.bar_chart,
+        navSelectedIcon: Icons.bar_chart_outlined,
+      )
+    ];
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    tasks.sort((a, b) {
+      if (a.deadLine == null && b.deadLine == null) {
+        return a.title.compareTo(b.title);
+      } else if (a.deadLine == null) {
+        return 1;
+      } else if (b.deadLine == null) {
+        return -1;
+      } else {
+        return a.deadLine!.compareTo(b.deadLine!);
+      }
+    });
+    final destination = destinations[currentIndex];
+
+    return Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 65,
+          title: destination.screenTitle,
+          actions: destination.appBarActions,
+        ),
+        bottomNavigationBar: NavigationBar(
+          backgroundColor: Colors.indigo.withAlpha(85),
+          indicatorColor: Colors.white,
+          selectedIndex: currentIndex,
+          height: 65,
+          onDestinationSelected: updateIndex,
+          destinations: destinations
+              .map(
+                (destination) => NavigationDestination(
+                  icon: Icon(
+                    destination.navIcon,
+                    size: 30,
+                  ),
+                  label: destination.navLabel,
+                  selectedIcon: Icon(
+                    destination.navSelectedIcon,
+                    size: 30,
+                  ),
+                ),
+              )
+              .toList(),
+        ),
+        body: destination.screen);
   }
 }
