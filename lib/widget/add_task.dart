@@ -93,7 +93,7 @@ class _AddTaskState extends State<AddTask> {
 
   void onDateLineTap() async {
     final now = DateTime.now();
-    final firstDate = DateTime(now.year, now.month, now.day);
+    final firstDate = DateTime(now.year, now.month, now.day - 7);
     final lastDate = DateTime(now.year + 1, now.month, now.day);
 
     final dateFromUser = await showDatePicker(

@@ -13,9 +13,18 @@ class StatisticScreen extends StatelessWidget {
 
     for (var i = 0; i < 7; i++) {
       final date = now.subtract(Duration(days: i));
-      int counter = 8;
+      int counter = 0;
 
-      taskExpense.add(TaskExpense(dateTime: date, counter: counter));
+      for (var task in tasks) {
+        if (task.isCompleted && task.finalTime!.day == date.day) {
+          counter++;
+        }
+      }
+
+      taskExpense.add(TaskExpense(
+        dateTime: date,
+        counter: counter,
+      ));
     }
 
     return taskExpense.reversed.toList();
