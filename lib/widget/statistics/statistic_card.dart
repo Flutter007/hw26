@@ -9,9 +9,9 @@ class StatisticCard extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: Card(
-        color: Colors.yellow.shade200,
+        color: Colors.blueGrey.shade300,
         child: Padding(
-          padding: EdgeInsets.all(50),
+          padding: EdgeInsets.all(30),
           child: child,
         ),
       ),

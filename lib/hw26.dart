@@ -52,6 +52,22 @@ class _Hw26State extends State<Hw26> {
       categoryId: 'training',
     ),
     Task(
+      title: 'Сделать растяжку!!!!',
+      isCompleted: false,
+      deadLine: DateTime(2025, 2, 2, 2, 2),
+      finalTime: DateTime.now().subtract(Duration(days: 4)),
+      isDoneInTime: false,
+      categoryId: 'training',
+    ),
+    Task(
+      title: 'Купить очиститель!',
+      isCompleted: false,
+      deadLine: DateTime(2025, 3, 3, 3, 3),
+      isDoneInTime: false,
+      categoryId: 'urgent',
+      finalTime: DateTime.now().subtract(Duration(days: 5)),
+    ),
+    Task(
       title: 'Купить корм коту!!!!',
       isCompleted: false,
       deadLine: DateTime(2025, 3, 3, 3, 3),

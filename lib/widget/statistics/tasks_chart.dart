@@ -10,7 +10,7 @@ class TasksChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget getTitles(double value, TitleMeta meta) {
-      String txt = '';
+      String txt = value.toInt().toString();
       for (var expense in expenses) {
         if (expense.dateTime.day == value.toInt()) {
           txt = '${expense.dateTime.day}.${expense.dateTime.month}';
@@ -18,8 +18,13 @@ class TasksChart extends StatelessWidget {
         }
       }
 
-      return Text(txt,
-          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold));
+      return Text(
+        txt,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      );
     }
 
     BarTouchTooltipData getToolLipData = BarTouchTooltipData(
@@ -36,6 +41,7 @@ class TasksChart extends StatelessWidget {
           rod.toY.round().toString(),
           const TextStyle(
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         );
       },
@@ -46,7 +52,7 @@ class TasksChart extends StatelessWidget {
       bottomTitles: AxisTitles(
         sideTitles: SideTitles(
           showTitles: true,
-          reservedSize: 30,
+          reservedSize: 20,
           getTitlesWidget: getTitles,
         ),
       ),
@@ -62,18 +68,18 @@ class TasksChart extends StatelessWidget {
     );
     LinearGradient barsGradient = LinearGradient(
       colors: [
-        Colors.blue.shade900,
+        Colors.blue.shade800,
         Colors.blue.shade300,
       ],
-      begin: Alignment.bottomCenter,
-      end: Alignment.topCenter,
+      begin: Alignment.centerRight,
+      end: Alignment.bottomRight,
     );
 
     return StatisticCard(
       child: Container(
         height: 300,
-        padding: EdgeInsets.symmetric(vertical: 10),
-        margin: EdgeInsets.only(top: 20),
+        padding: EdgeInsets.symmetric(vertical: 14),
+        margin: EdgeInsets.only(top: 10),
         child: BarChart(
           BarChartData(
             barTouchData: BarTouchData(
@@ -82,12 +88,12 @@ class TasksChart extends StatelessWidget {
             barGroups: expenses
                 .map(
                   (expense) => BarChartGroupData(
-                    x: expense.dateTime.day.toInt(),
+                    x: expense.dateTime.day,
                     showingTooltipIndicators: [0],
                     barRods: [
                       BarChartRodData(
                         gradient: barsGradient,
-                        toY: expense.counter!.toDouble(),
+                        toY: (expense.counter ?? 0).toDouble(),
                         width: 12,
                       ),
                     ],
