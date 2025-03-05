@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:hw26/model/task.dart';
+import 'package:hw26/theme/colors.dart';
 import 'package:hw26/widget/task_card.dart';
 
 class TodoScreen extends StatelessWidget {
@@ -22,6 +23,7 @@ class TodoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final customTheme = theme.extension<CustomColor>()!;
     return Padding(
       padding: const EdgeInsets.all(12),
       child: ListView.builder(
@@ -37,7 +39,7 @@ class TodoScreen extends StatelessWidget {
                   icon: Icons.delete,
                   borderRadius: BorderRadius.circular(15),
                   label: 'Delete',
-                  backgroundColor: theme.colorScheme.error,
+                  backgroundColor: customTheme.urgentIconColor,
                   padding: EdgeInsets.all(15),
                 ),
                 SlidableAction(

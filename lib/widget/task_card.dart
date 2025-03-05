@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hw26/model/task.dart';
 import 'package:hw26/helpers/formatted_datetime.dart';
+import 'package:hw26/theme/colors.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
@@ -21,11 +22,12 @@ class TaskCard extends StatelessWidget {
     final theme = Theme.of(context);
     final titleMediumStyle = theme.textTheme.titleMedium!;
     final category = task.category;
+    final customColor = theme.extension<CustomColor>()!;
     bool isUrgent = category.label == 'Urgent';
     bool isNotNull = task.deadLine != null;
     return Card(
       elevation: 9.0,
-      color: Colors.blue.shade100,
+      color: customColor.cardBackgroundColor,
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Column(
@@ -52,7 +54,8 @@ class TaskCard extends StatelessWidget {
                         ? titleMediumStyle.copyWith(
                             color: Colors.grey,
                             decoration: TextDecoration.lineThrough)
-                        : titleMediumStyle,
+                        : titleMediumStyle.copyWith(
+                            color: customColor.cardTextColor),
                   ),
                 ),
               ],
@@ -67,17 +70,18 @@ class TaskCard extends StatelessWidget {
                       category.icon,
                       size: 24,
                       color: isUrgent
-                          ? theme.colorScheme.error
-                          : theme.colorScheme.tertiary,
+                          ? customColor.urgentIconColor
+                          : customColor.cardTextColor,
                     ),
                     SizedBox(width: 5),
                     Text(
                       category.label,
                       style: isUrgent
                           ? titleMediumStyle.copyWith(
-                              color: Colors.red.shade900,
+                              color: customColor.urgentIconColor,
                             )
-                          : titleMediumStyle,
+                          : titleMediumStyle.copyWith(
+                              color: customColor.cardTextColor),
                     ),
                   ],
                 ),
@@ -88,7 +92,7 @@ class TaskCard extends StatelessWidget {
                         ? (task.isDoneInTime
                             ? Colors.green.shade600
                             : Colors.red.shade600)
-                        : Colors.grey.shade700,
+                        : customColor.cardTextColor,
                   ),
                 )
               ],

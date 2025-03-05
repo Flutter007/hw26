@@ -3,6 +3,7 @@ import 'package:hw26/model/destination.dart';
 import 'package:hw26/model/task.dart';
 import 'package:hw26/screens/statistic_screen.dart';
 import 'package:hw26/screens/todo_screen.dart';
+import 'package:hw26/theme/colors.dart';
 import 'package:hw26/widget/add_task.dart';
 
 import 'data/categories_data.dart';
@@ -203,6 +204,7 @@ class _Hw26State extends State<Hw26> {
 
   @override
   Widget build(BuildContext context) {
+    final customColor = Theme.of(context).extension<CustomColor>()!;
     tasks.sort((a, b) {
       if (a.deadLine == null && b.deadLine == null) {
         return a.title.compareTo(b.title);
@@ -224,7 +226,7 @@ class _Hw26State extends State<Hw26> {
         ),
         bottomNavigationBar: NavigationBar(
           backgroundColor: Colors.indigo.withAlpha(85),
-          indicatorColor: Colors.white,
+          indicatorColor: customColor.bottomNavBarSelectedColor,
           selectedIndex: currentIndex,
           height: 65,
           onDestinationSelected: updateIndex,
