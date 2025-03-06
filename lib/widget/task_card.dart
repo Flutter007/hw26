@@ -45,6 +45,7 @@ class TaskCard extends StatelessWidget {
                         ? Icons.check_box
                         : Icons.check_box_outline_blank_sharp,
                   ),
+                  color: customColor.cardTextColor,
                 ),
                 Expanded(
                   child: Text(
@@ -52,10 +53,12 @@ class TaskCard extends StatelessWidget {
                     task.title,
                     style: task.isCompleted
                         ? titleMediumStyle.copyWith(
-                            color: Colors.grey,
-                            decoration: TextDecoration.lineThrough)
+                            color: Colors.grey.shade700,
+                            decoration: TextDecoration.lineThrough,
+                          )
                         : titleMediumStyle.copyWith(
-                            color: customColor.cardTextColor),
+                            color: customColor.cardTextColor,
+                          ),
                   ),
                 ),
               ],
@@ -90,8 +93,8 @@ class TaskCard extends StatelessWidget {
                   style: titleMediumStyle.copyWith(
                     color: task.isCompleted && isNotNull
                         ? (task.isDoneInTime
-                            ? Colors.green.shade600
-                            : Colors.red.shade600)
+                            ? customColor.greenShade
+                            : customColor.urgentIconColor)
                         : customColor.cardTextColor,
                   ),
                 )

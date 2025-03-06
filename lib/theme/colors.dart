@@ -5,13 +5,16 @@ class CustomColor extends ThemeExtension<CustomColor> {
   final Color cardTextColor;
   final Color cardBackgroundColor;
   final Color urgentIconColor;
+  final Color backgroundOfChart;
+  final Color greenShade;
 
-  CustomColor({
-    required this.bottomNavBarSelectedColor,
-    required this.cardTextColor,
-    required this.cardBackgroundColor,
-    required this.urgentIconColor,
-  });
+  CustomColor(
+      {required this.bottomNavBarSelectedColor,
+      required this.cardTextColor,
+      required this.cardBackgroundColor,
+      required this.urgentIconColor,
+      required this.backgroundOfChart,
+      required this.greenShade});
 
   @override
   ThemeExtension<CustomColor> copyWith({
@@ -19,6 +22,8 @@ class CustomColor extends ThemeExtension<CustomColor> {
     Color? cardTextColor,
     Color? cardBackgroundColor,
     Color? urgentIconColor,
+    Color? backgroundOfChart,
+    Color? greenShade,
   }) {
     return CustomColor(
       bottomNavBarSelectedColor:
@@ -26,6 +31,8 @@ class CustomColor extends ThemeExtension<CustomColor> {
       cardTextColor: cardTextColor ?? this.cardTextColor,
       cardBackgroundColor: cardBackgroundColor ?? this.cardBackgroundColor,
       urgentIconColor: urgentIconColor ?? this.urgentIconColor,
+      backgroundOfChart: backgroundOfChart ?? this.backgroundOfChart,
+      greenShade: greenShade ?? this.greenShade,
     );
   }
 
@@ -40,6 +47,9 @@ class CustomColor extends ThemeExtension<CustomColor> {
       cardBackgroundColor:
           Color.lerp(cardBackgroundColor, other.cardBackgroundColor, t)!,
       urgentIconColor: Color.lerp(urgentIconColor, other.urgentIconColor, t)!,
+      backgroundOfChart:
+          Color.lerp(backgroundOfChart, other.backgroundOfChart, t)!,
+      greenShade: Color.lerp(greenShade, other.greenShade, t)!,
     );
   }
 }

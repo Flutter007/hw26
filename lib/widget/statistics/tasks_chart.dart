@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:hw26/model/task_expense.dart';
+import 'package:hw26/theme/colors.dart';
 import 'package:hw26/widget/statistics/statistic_card.dart';
 
 class TasksChart extends StatelessWidget {
@@ -9,6 +10,7 @@ class TasksChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customColor = Theme.of(context).extension<CustomColor>()!;
     Widget getTitles(double value, TitleMeta meta) {
       String txt = value.toInt().toString();
       for (var expense in expenses) {
@@ -17,12 +19,12 @@ class TasksChart extends StatelessWidget {
           break;
         }
       }
-
       return Text(
         txt,
-        style: const TextStyle(
-          fontSize: 16,
+        style: TextStyle(
+          fontSize: 17,
           fontWeight: FontWeight.bold,
+          color: customColor.cardTextColor,
         ),
       );
     }
@@ -39,9 +41,9 @@ class TasksChart extends StatelessWidget {
       ) {
         return BarTooltipItem(
           rod.toY.round().toString(),
-          const TextStyle(
+          TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: customColor.cardTextColor,
           ),
         );
       },

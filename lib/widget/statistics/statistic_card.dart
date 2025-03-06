@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hw26/theme/colors.dart';
 
 class StatisticCard extends StatelessWidget {
   final Widget child;
@@ -6,10 +7,11 @@ class StatisticCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final customColor = Theme.of(context).extension<CustomColor>()!;
     return SizedBox(
       width: double.infinity,
       child: Card(
-        color: Colors.blueGrey.shade300,
+        color: customColor.backgroundOfChart,
         child: Padding(
           padding: EdgeInsets.all(30),
           child: child,

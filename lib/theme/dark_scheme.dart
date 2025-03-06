@@ -11,39 +11,52 @@ final darkCustomColor = CustomColor(
   cardTextColor: Colors.black,
   cardBackgroundColor: Colors.white,
   urgentIconColor: Colors.red.shade900,
+  backgroundOfChart: Colors.grey.shade400,
+  greenShade: Colors.green.shade900,
 );
 
 final darkTheme = ThemeData.dark().copyWith(
-    colorScheme: darkColorScheme,
-    extensions: [darkCustomColor],
-    appBarTheme: AppBarTheme().copyWith(
-      backgroundColor: darkColorScheme.onSecondary,
+  colorScheme: darkColorScheme,
+  extensions: [darkCustomColor],
+  appBarTheme: AppBarTheme().copyWith(
+    backgroundColor: darkColorScheme.onSecondary,
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      backgroundColor: darkCustomColor.urgentIconColor,
+      foregroundColor: darkCustomColor.cardTextColor,
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: darkCustomColor.urgentIconColor,
-        foregroundColor: darkCustomColor.cardTextColor,
+  ),
+  timePickerTheme: TimePickerThemeData().copyWith(
+    backgroundColor: darkCustomColor.cardTextColor,
+    confirmButtonStyle: ButtonStyle(
+      foregroundColor:
+          WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
+    ),
+    cancelButtonStyle: ButtonStyle(
+      foregroundColor:
+          WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
+    ),
+  ),
+  datePickerTheme: DatePickerThemeData().copyWith(
+    backgroundColor: darkCustomColor.cardTextColor,
+    confirmButtonStyle: ButtonStyle(
+      foregroundColor:
+          WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
+    ),
+    cancelButtonStyle: ButtonStyle(
+      foregroundColor:
+          WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
+    ),
+  ),
+  dropdownMenuTheme: DropdownMenuThemeData().copyWith(
+    textStyle: TextStyle(color: darkCustomColor.cardBackgroundColor),
+    menuStyle: MenuStyle(
+      side: WidgetStatePropertyAll(
+        BorderSide(
+          color: darkCustomColor.cardBackgroundColor,
+        ),
       ),
     ),
-    timePickerTheme: TimePickerThemeData().copyWith(
-      backgroundColor: darkCustomColor.cardTextColor,
-      confirmButtonStyle: ButtonStyle(
-        foregroundColor:
-            WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
-      ),
-      cancelButtonStyle: ButtonStyle(
-        foregroundColor:
-            WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
-      ),
-    ),
-    datePickerTheme: DatePickerThemeData().copyWith(
-      backgroundColor: darkCustomColor.cardTextColor,
-      confirmButtonStyle: ButtonStyle(
-        foregroundColor:
-            WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
-      ),
-      cancelButtonStyle: ButtonStyle(
-        foregroundColor:
-            WidgetStatePropertyAll(darkCustomColor.cardBackgroundColor),
-      ),
-    ));
+  ),
+);

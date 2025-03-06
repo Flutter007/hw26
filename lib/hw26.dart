@@ -19,6 +19,7 @@ class _Hw26State extends State<Hw26> {
   bool isDoneInTime = false;
   String? selectedInfoCategory = 'all_tasks';
   int currentIndex = 0;
+
   List<Task> tasks = [
     Task(
       title: 'Продать Li 9',
@@ -118,7 +119,9 @@ class _Hw26State extends State<Hw26> {
   }
 
   void openAddSheet() {
+    final customColor = Theme.of(context).extension<CustomColor>()!;
     showModalBottomSheet(
+      backgroundColor: customColor.cardTextColor,
       isScrollControlled: true,
       useSafeArea: true,
       context: context,
@@ -146,6 +149,7 @@ class _Hw26State extends State<Hw26> {
   }
 
   List<Destination> get destinations {
+    final customColor = Theme.of(context).extension<CustomColor>()!;
     return [
       Destination(
         screenTitle: Text('ToDo list!'),
@@ -164,6 +168,7 @@ class _Hw26State extends State<Hw26> {
           isDoneInTime: isDoneInTime,
         ),
         appBarActions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.dark_mode_outlined)),
           DropdownMenu(
             initialSelection: selectedInfoCategory,
             width: 150,
@@ -183,7 +188,7 @@ class _Hw26State extends State<Hw26> {
             onPressed: openAddSheet,
             icon: Icon(
               Icons.add,
-              color: Colors.blue.shade700,
+              color: customColor.cardBackgroundColor,
               size: 33,
             ),
           ),
@@ -236,11 +241,13 @@ class _Hw26State extends State<Hw26> {
                   icon: Icon(
                     destination.navIcon,
                     size: 30,
+                    color: customColor.cardBackgroundColor,
                   ),
                   label: destination.navLabel,
                   selectedIcon: Icon(
                     destination.navSelectedIcon,
                     size: 30,
+                    color: customColor.cardBackgroundColor,
                   ),
                 ),
               )
