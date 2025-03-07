@@ -13,7 +13,7 @@ class StatisticCard extends StatelessWidget {
       child: Card(
         color: customColor.backgroundOfChart,
         child: Padding(
-          padding: EdgeInsets.all(30),
+          padding: EdgeInsets.all(26),
           child: child,
         ),
       ),
